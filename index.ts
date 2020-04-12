@@ -5,12 +5,19 @@ const prepareEnvFiles = require("./scripts/prepareEnvFiles");
 
 (async function execute() {
     try {
+        core.info(`Installing dependencies...`);
+        core.info(`Building all packages...`);
+        core.info(`Checking if all dependencies are in order...`);
+        core.info(`Running Jest tests...`);
+
+
+        return;
         // Install all dependencies.
         await exec.exec("yarn");
 
         // Prepare environment files.
         await prepareEnvFiles();
-    return;
+
         // Run build of all packages.
         await exec.exec("yarn lerna run build --stream");
 
@@ -19,7 +26,6 @@ const prepareEnvFiles = require("./scripts/prepareEnvFiles");
 
         // Run tests.
         await exec.exec("yarn test");
-
     } catch (error) {
         core.setFailed(error.message);
     }

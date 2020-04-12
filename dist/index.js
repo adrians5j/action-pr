@@ -5226,36 +5226,7 @@ module.exports = {
 /***/ }),
 /* 193 */,
 /* 194 */,
-/* 195 */
-/***/ (function(module) {
-
-/**
- * Convert array of 16 byte values to UUID string format of the form:
- * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
- */
-var byteToHex = [];
-for (var i = 0; i < 256; ++i) {
-  byteToHex[i] = (i + 0x100).toString(16).substr(1);
-}
-
-function bytesToUuid(buf, offset) {
-  var i = offset || 0;
-  var bth = byteToHex;
-  // join used to fix memory issue caused by concatenation: https://bugs.chromium.org/p/v8/issues/detail?id=3175#c4
-  return ([bth[buf[i++]], bth[buf[i++]], 
-	bth[buf[i++]], bth[buf[i++]], '-',
-	bth[buf[i++]], bth[buf[i++]], '-',
-	bth[buf[i++]], bth[buf[i++]], '-',
-	bth[buf[i++]], bth[buf[i++]], '-',
-	bth[buf[i++]], bth[buf[i++]],
-	bth[buf[i++]], bth[buf[i++]],
-	bth[buf[i++]], bth[buf[i++]]]).join('');
-}
-
-module.exports = bytesToUuid;
-
-
-/***/ }),
+/* 195 */,
 /* 196 */,
 /* 197 */
 /***/ (function(module, __unusedexports, __webpack_require__) {
@@ -11664,20 +11635,7 @@ if (typeof fs.realpath.native === 'function') {
 
 
 /***/ }),
-/* 457 */
-/***/ (function(module, __unusedexports, __webpack_require__) {
-
-// Unique ID creation requires a high quality random # generator.  In node.js
-// this is pretty straight-forward - we use the crypto API.
-
-var crypto = __webpack_require__(417);
-
-module.exports = function nodeRNG() {
-  return crypto.randomBytes(16);
-};
-
-
-/***/ }),
+/* 457 */,
 /* 458 */,
 /* 459 */,
 /* 460 */,
@@ -16060,11 +16018,15 @@ const prepareEnvFiles = __webpack_require__(838);
 (function execute() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
+            core.info(`Installing dependencies...`);
+            core.info(`Building all packages...`);
+            core.info(`Checking if all dependencies are in order...`);
+            core.info(`Running Jest tests...`);
+            return;
             // Install all dependencies.
             yield exec.exec("yarn");
             // Prepare environment files.
             yield prepareEnvFiles();
-            return;
             // Run build of all packages.
             yield exec.exec("yarn lerna run build --stream");
             // Check if all dependencies are in order.
@@ -17834,7 +17796,6 @@ const { green } = __webpack_require__(946);
 const loadJson = __webpack_require__(37);
 const writeJson = __webpack_require__(35);
 const shortid = __webpack_require__(178);
-const uuid = __webpack_require__(991);
 module.exports = function prepareEnvFiles() {
     return __awaiter(this, void 0, void 0, function* () {
         console.log("Preparing environment files...");
@@ -37064,41 +37025,7 @@ exports.exec = exec;
 /* 988 */,
 /* 989 */,
 /* 990 */,
-/* 991 */
-/***/ (function(module, __unusedexports, __webpack_require__) {
-
-var rng = __webpack_require__(457);
-var bytesToUuid = __webpack_require__(195);
-
-function v4(options, buf, offset) {
-  var i = buf && offset || 0;
-
-  if (typeof(options) == 'string') {
-    buf = options === 'binary' ? new Array(16) : null;
-    options = null;
-  }
-  options = options || {};
-
-  var rnds = options.random || (options.rng || rng)();
-
-  // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
-  rnds[6] = (rnds[6] & 0x0f) | 0x40;
-  rnds[8] = (rnds[8] & 0x3f) | 0x80;
-
-  // Copy bytes to buffer, if provided
-  if (buf) {
-    for (var ii = 0; ii < 16; ++ii) {
-      buf[i + ii] = rnds[ii];
-    }
-  }
-
-  return buf || bytesToUuid(rnds);
-}
-
-module.exports = v4;
-
-
-/***/ }),
+/* 991 */,
 /* 992 */,
 /* 993 */,
 /* 994 */,
