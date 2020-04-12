@@ -16019,30 +16019,26 @@ const prepareEnvFiles = __webpack_require__(838);
     return __awaiter(this, void 0, void 0, function* () {
         try {
             core.info(`Installing dependencies...`);
-            core.info(`Checking if all dependencies are in order...`);
-            core.info(`Building all packages...`);
-            core.info(`Running Jest tests...`);
-            core.startGroup("Deploying to AWS and testing...");
-            core.info(`Deploy API...`);
-            core.info(`Deploy Apps...`);
-            core.info(`Setting up Cypress environment variables...`);
-            core.info(`Running Cypress installation tests...`);
-            core.info(`Running Cypress tests...`);
-            core.endGroup();
-            return;
-            // Install all dependencies.
             yield exec.exec("yarn");
-            // Prepare environment files.
-            yield prepareEnvFiles();
-            // Run build of all packages.
-            yield exec.exec("yarn lerna run build --stream");
-            // Check if all dependencies are in order.
+            core.info(`Checking if all dependencies are in order...`);
             yield exec.exec("yarn adio");
-            // Run tests.
+            core.info(`Building all packages...`);
+            yield exec.exec("yarn lerna run build --stream");
+            core.info(`Running Jest tests...`);
             yield exec.exec("yarn test");
+            // This part below is TODO - need to finish Cypress installation test first.
+            core.startGroup("[TODO] Deploying to AWS and testing...");
+            core.info(`[TODO] Setting up .env files...`);
+            yield prepareEnvFiles();
+            core.info(`[TODO] Deploy API...`);
+            core.info(`[TODO] Deploy Apps...`);
+            core.info(`[TODO] Setting up Cypress environment variables...`);
+            core.info(`[TODO] Running Cypress installation tests...`);
+            core.info(`[TODO]  Running Cypress tests...`);
+            core.endGroup();
         }
-        catch (error) {
-            core.setFailed(error.message);
+        catch (e) {
+            core.setFailed(e.message);
         }
     });
 })();
