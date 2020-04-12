@@ -2,12 +2,12 @@
 const fs = require("fs-extra");
 const path = require("path");
 const { green } = require("chalk");
-const crypto = require("crypto");
 const loadJson = require("load-json-file");
 const writeJson = require("write-json-file");
+const shortid = require("shortid");
 const uuid = require("uuid/v4");
 
-async function prepareEnvFiles() {
+module.exports = async function prepareEnvFiles() {
     console.log("Preparing environment files...");
 
     if (!process.env.MONGODB_SERVER) {
@@ -29,7 +29,7 @@ async function prepareEnvFiles() {
 
     fs.copyFileSync(rootExampleEnvJsonPath, rootEnvJsonPath);
     const rootEnvJson = await loadJson.sync(rootEnvJsonPath);
-    rootEnvJson.default.MONGODB_NAME = `webiny-test-` + (new Date().getTime());
+    rootEnvJson.default.MONGODB_NAME = `webiny-test-` + new Date().getTime();
     rootEnvJson.default.MONGODB_SERVER = process.env.MONGODB_SERVER;
 
     await writeJson(rootEnvJsonPath, rootEnvJson);
@@ -42,13 +42,10 @@ async function prepareEnvFiles() {
 
     fs.copyFileSync(exampleEnvJsonPath, envJsonPath);
 
-    const jwtSecret = crypto
-        .randomBytes(128)
-        .toString("base64")
-        .slice(0, 60);
+    const jwtSecret = shortid.generate()
 
     const envJson = await loadJson.sync(envJsonPath);
-    envJson.default.S3_BUCKET = `webiny-js-dev-${uuid()
+    envJson.default.S3_BUCKET = `webiny-js-dev-${shortid.generate()
         .split("-")
         .shift()}`;
     envJson.default.JWT_SECRET = jwtSecret;
@@ -67,8 +64,5 @@ async function prepareEnvFiles() {
     fs.copyFileSync(exampleSiteEnvJsonPath, siteEnvJsonPath);
     console.log(`✅️ ${green("examples/apps/site/.env.json")} was created successfully!`);
 
-
     console.log("✅️ Preparing environment files complete!");
-}
-
-prepareEnvFiles();
+};
