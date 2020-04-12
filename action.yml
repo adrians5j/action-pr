@@ -1,5 +1,5 @@
-name: "Webiny Pull Request"
-description: "Does everything that's needed in order to validate a new PR."
+name: Webiny Pull Request
+description: Does everything that's needed in order to validate a new PR.
 runs:
-  using: "node12"
-  main: "dist/index.js"
+  using: node12
+  main: dist/index.js
