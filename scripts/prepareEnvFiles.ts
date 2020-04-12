@@ -5,7 +5,6 @@ const { green } = require("chalk");
 const loadJson = require("load-json-file");
 const writeJson = require("write-json-file");
 const shortid = require("shortid");
-const uuid = require("uuid/v4");
 
 module.exports = async function prepareEnvFiles() {
     console.log("Preparing environment files...");
