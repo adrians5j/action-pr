@@ -6,7 +6,7 @@ const exec = require("@actions/exec");
     try {
         // Install all dependencies.
         await exec.exec("yarn");
-        await exec.exec("adio");
+        await exec.exec("yarn adio");
     } catch (error) {
         core.setFailed(error.message);
     }
