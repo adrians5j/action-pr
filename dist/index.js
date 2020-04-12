@@ -9741,7 +9741,7 @@ const exec = __webpack_require__(986);
         try {
             // Install all dependencies.
             yield exec.exec("yarn");
-            yield exec.exec("adio");
+            yield exec.exec("yarn adio");
         }
         catch (error) {
             core.setFailed(error.message);
