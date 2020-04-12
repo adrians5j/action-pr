@@ -6,10 +6,26 @@ const prepareEnvFiles = require("./scripts/prepareEnvFiles");
 (async function execute() {
     try {
         core.info(`Installing dependencies...`);
-        core.info(`Building all packages...`);
+
         core.info(`Checking if all dependencies are in order...`);
+
+        core.info(`Building all packages...`);
+
         core.info(`Running Jest tests...`);
 
+        core.startGroup("Deploying to AWS and testing...");
+
+        core.info(`Deploy API...`);
+
+        core.info(`Deploy Apps...`);
+
+        core.info(`Setting up Cypress environment variables...`);
+
+        core.info(`Running Cypress installation tests...`);
+
+        core.info(`Running Cypress tests...`);
+
+        core.endGroup();
 
         return;
         // Install all dependencies.
