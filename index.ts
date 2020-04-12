@@ -21,7 +21,7 @@ const prepareEnvFiles = require("./scripts/prepareEnvFiles");
 
         core.startGroup("[TODO] Deploying to AWS and testing...");
 
-        core.info(`[TODO] Setting up .env files...`);
+        core.info(`Setting up .env files...`);
         await prepareEnvFiles();
 
         core.info(`[TODO] Deploy API...`);
