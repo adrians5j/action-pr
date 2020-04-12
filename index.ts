@@ -6,43 +6,36 @@ const prepareEnvFiles = require("./scripts/prepareEnvFiles");
 (async function execute() {
     try {
         core.info(`Installing dependencies...`);
-
-        core.info(`Checking if all dependencies are in order...`);
-
-        core.info(`Building all packages...`);
-
-        core.info(`Running Jest tests...`);
-
-        core.startGroup("Deploying to AWS and testing...");
-
-        core.info(`Deploy API...`);
-
-        core.info(`Deploy Apps...`);
-
-        core.info(`Setting up Cypress environment variables...`);
-
-        core.info(`Running Cypress installation tests...`);
-
-        core.info(`Running Cypress tests...`);
-
-        core.endGroup();
-
-        return;
-        // Install all dependencies.
         await exec.exec("yarn");
 
-        // Prepare environment files.
-        await prepareEnvFiles();
-
-        // Run build of all packages.
-        await exec.exec("yarn lerna run build --stream");
-
-        // Check if all dependencies are in order.
+        core.info(`Checking if all dependencies are in order...`);
         await exec.exec("yarn adio");
 
-        // Run tests.
+        core.info(`Building all packages...`);
+        await exec.exec("yarn lerna run build --stream");
+
+        core.info(`Running Jest tests...`);
         await exec.exec("yarn test");
-    } catch (error) {
-        core.setFailed(error.message);
+
+        // This part below is TODO - need to finish Cypress installation test first.
+
+        core.startGroup("[TODO] Deploying to AWS and testing...");
+
+        core.info(`[TODO] Setting up .env files...`);
+        await prepareEnvFiles();
+
+        core.info(`[TODO] Deploy API...`);
+
+        core.info(`[TODO] Deploy Apps...`);
+
+        core.info(`[TODO] Setting up Cypress environment variables...`);
+
+        core.info(`[TODO] Running Cypress installation tests...`);
+
+        core.info(`[TODO]  Running Cypress tests...`);
+
+        core.endGroup();
+    } catch (e) {
+        core.setFailed(e.message);
     }
 })();
