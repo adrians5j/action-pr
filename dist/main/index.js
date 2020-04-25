@@ -14540,11 +14540,10 @@ const pingUntilDeployed = __webpack_require__(952);
         core.info(`Preparing ".env.json" files...`);
         yield prepareEnvFiles();
         core.info(`✨ Deploying API...`);
-        yield exec.exec("yarn webiny deploy-api --env devZZZ --debug");
-        /*core.info(`✨ Deploying Apps...`);
-        await exec.exec("yarn webiny deploy-apps --env dev --debug");
-
-        core.info(`⏳ Waiting for the project to become available...`);
+        yield exec.exec("yarn webiny deploy-api --env dev --debug");
+        core.info(`✨ Deploying Apps...`);
+        yield exec.exec("yarn webiny deploy-apps --env dev --debug");
+        /*core.info(`⏳ Waiting for the project to become available...`);
         await pingUntilDeployed();*/
         core.info(`🎉 Project deployed and ready.`);
         core.endGroup();

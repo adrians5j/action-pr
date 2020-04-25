@@ -12,12 +12,12 @@ const pingUntilDeployed = require("./scripts/pingUntilDeployed");
         await prepareEnvFiles();
 
         core.info(`✨ Deploying API...`);
-        await exec.exec("yarn webiny deploy-api --env devZZZ --debug");
+        await exec.exec("yarn webiny deploy-api --env dev --debug");
 
-        /*core.info(`✨ Deploying Apps...`);
+        core.info(`✨ Deploying Apps...`);
         await exec.exec("yarn webiny deploy-apps --env dev --debug");
 
-        core.info(`⏳ Waiting for the project to become available...`);
+        /*core.info(`⏳ Waiting for the project to become available...`);
         await pingUntilDeployed();*/
 
         core.info(`🎉 Project deployed and ready.`);
