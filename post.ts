@@ -6,10 +6,14 @@
         core.startGroup("Removing Webiny Project");
 
         core.info(`✨ Removing API...`);
-        await exec.exec("node node_modules/@webiny/cli/bin.js remove-api --env dev --debug");
+        await exec.exec("node ../node_modules/@webiny/cli/bin.js remove-api --env dev --debug", [], {
+            cwd: "./examples"
+        });
 
         core.info(`✨ Removing Apps...`);
-        await exec.exec("node node_modules/@webiny/cli/bin.js remove-apps --env dev --debug");
+        await exec.exec("node ../node_modules/@webiny/cli/bin.js remove-apps --env dev --debug", [], {
+            cwd: "./examples"
+        });
 
         core.info(`🎉 Project removed successfully.`);
 

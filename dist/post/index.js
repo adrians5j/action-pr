@@ -1273,9 +1273,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     try {
         core.startGroup("Removing Webiny Project");
         core.info(`✨ Removing API...`);
-        yield exec.exec("node node_modules/@webiny/cli/bin.js remove-api --env dev --debug");
+        yield exec.exec("node ../node_modules/@webiny/cli/bin.js remove-api --env dev --debug", [], {
+            cwd: "./examples"
+        });
         core.info(`✨ Removing Apps...`);
-        yield exec.exec("node node_modules/@webiny/cli/bin.js remove-apps --env dev --debug");
+        yield exec.exec("node ../node_modules/@webiny/cli/bin.js remove-apps --env dev --debug", [], {
+            cwd: "./examples"
+        });
         core.info(`🎉 Project removed successfully.`);
         core.endGroup();
     }

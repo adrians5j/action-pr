@@ -12,10 +12,14 @@ const pingUntilDeployed = require("./scripts/pingUntilDeployed");
         await prepareEnvFiles();
 
         core.info(`✨ Deploying API...`);
-        await exec.exec("node node_modules/@webiny/cli/bin.js deploy-api --env dev --debug");
+        await exec.exec("node ../node_modules/@webiny/cli/bin.js deploy-api --env dev --debug", [], {
+            cwd: "./examples"
+        });
 
         core.info(`✨ Deploying Apps...`);
-        await exec.exec("node node_modules/@webiny/cli/bin.js deploy-apps --env dev --debug");
+        await exec.exec("node ../node_modules/@webiny/cli/bin.js deploy-apps --env dev --debug", [], {
+            cwd: "./examples"
+        });
 
         /*core.info(`⏳ Waiting for the project to become available...`);
         await pingUntilDeployed();*/
