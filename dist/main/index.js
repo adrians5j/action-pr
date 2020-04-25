@@ -14044,9 +14044,7 @@ module.exports = function prepareEnvFiles() {
         fs.copyFileSync(exampleEnvJsonPath, envJsonPath);
         const jwtSecret = shortid.generate();
         const envJson = yield loadJson.sync(envJsonPath);
-        envJson.default.S3_BUCKET = `webiny-js-dev-${shortid.generate()
-            .split("-")
-            .shift()}`;
+        envJson.default.S3_BUCKET = `webiny-js-dev-${new Date().getTime()}`;
         envJson.default.JWT_SECRET = jwtSecret;
         yield writeJson(envJsonPath, envJson);
         console.log(`✅️ ${green("examples/api/.env.json")} was created successfully!`);

@@ -44,9 +44,8 @@ module.exports = async function prepareEnvFiles() {
     const jwtSecret = shortid.generate()
 
     const envJson = await loadJson.sync(envJsonPath);
-    envJson.default.S3_BUCKET = `webiny-js-dev-${shortid.generate()
-        .split("-")
-        .shift()}`;
+    envJson.default.S3_BUCKET = `webiny-js-dev-${new Date().getTime()}`;
+
     envJson.default.JWT_SECRET = jwtSecret;
     await writeJson(envJsonPath, envJson);
     console.log(`✅️ ${green("examples/api/.env.json")} was created successfully!`);
