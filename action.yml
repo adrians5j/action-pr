@@ -1,5 +1,11 @@
-name: Webiny Pull Request
-description: Does everything that's needed in order to validate a new PR.
+name: "Deploy"
+description: "Deploys a Webiny project"
+inputs:
+  working-directory:
+    description: "Set a custom working directory (defaults to project root)."
+    required: false
+    default: "."
 runs:
   using: node12
   main: dist/index.js
+  post: dist/index.js

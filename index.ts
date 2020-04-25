@@ -1,41 +1,54 @@
 const core = require("@actions/core");
-const github = require("@actions/github");
 const exec = require("@actions/exec");
 const prepareEnvFiles = require("./scripts/prepareEnvFiles");
+const pingUntilDeployed = require("./scripts/pingUntilDeployed");
 
-(async function execute() {
+export const isPost = !!process.env["STATE_isPost"];
+
+async function deploy() {
     try {
-        core.info(`Installing dependencies...`);
-        await exec.exec("yarn");
+        core.startGroup("Deploying Webiny Project");
 
-        core.info(`Checking if all dependencies are in order...`);
-        await exec.exec("yarn adio");
-
-        core.info(`Building all packages...`);
-        await exec.exec("yarn lerna run build --stream");
-
-        core.info(`Running Jest tests...`);
-        await exec.exec("yarn test");
-
-        // This part below is TODO - need to finish Cypress installation test first.
-
-        core.startGroup("[TODO] Deploying to AWS and testing...");
-
-        core.info(`Setting up .env files...`);
+        core.info(`Preparing ".env.json" files...`);
         await prepareEnvFiles();
 
-        core.info(`[TODO] Deploy API...`);
+        core.info(`✨ Deploying API...`);
+        await exec.exec("yarn webiny deploy-api --env devZZZ --debug");
 
-        core.info(`[TODO] Deploy Apps...`);
+        /*core.info(`✨ Deploying Apps...`);
+        await exec.exec("yarn webiny deploy-apps --env dev --debug");
 
-        core.info(`[TODO] Setting up Cypress environment variables...`);
+        core.info(`⏳ Waiting for the project to become available...`);
+        await pingUntilDeployed();*/
 
-        core.info(`[TODO] Running Cypress installation tests...`);
-
-        core.info(`[TODO]  Running Cypress tests...`);
+        core.info(`🎉 Project deployed and ready.`);
 
         core.endGroup();
     } catch (e) {
         core.setFailed(e.message);
     }
-})();
+}
+
+async function remove() {
+    try {
+        core.startGroup("Removing Webiny Project");
+
+        core.info(`✨ Removing API...`);
+        await exec.exec("yarn webiny remove-api --env dev --debug");
+
+        core.info(`✨ Removing Apps...`);
+        await exec.exec("yarn webiny remove-apps --env dev --debug");
+
+        core.info(`🎉 Project removed successfully.`);
+
+        core.endGroup();
+    } catch (e) {
+        core.setFailed(e.message);
+    }
+}
+
+if (isPost) {
+    remove();
+} else {
+    deploy();
+}
