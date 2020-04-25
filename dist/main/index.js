@@ -14540,9 +14540,13 @@ const pingUntilDeployed = __webpack_require__(952);
         core.info(`Preparing ".env.json" files...`);
         yield prepareEnvFiles();
         core.info(`✨ Deploying API...`);
-        yield exec.exec("node node_modules/@webiny/cli/bin.js deploy-api --env dev --debug");
+        yield exec.exec("node ../node_modules/@webiny/cli/bin.js deploy-api --env dev --debug", [], {
+            cwd: "./examples"
+        });
         core.info(`✨ Deploying Apps...`);
-        yield exec.exec("node node_modules/@webiny/cli/bin.js deploy-apps --env dev --debug");
+        yield exec.exec("node ../node_modules/@webiny/cli/bin.js deploy-apps --env dev --debug", [], {
+            cwd: "./examples"
+        });
         /*core.info(`⏳ Waiting for the project to become available...`);
         await pingUntilDeployed();*/
         core.info(`🎉 Project deployed and ready.`);
