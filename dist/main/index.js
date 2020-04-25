@@ -15844,7 +15844,6 @@ const ping = () => __awaiter(this, void 0, void 0, function* () {
     }
     return true;
 });
-ping();
 
 
 /***/ }),

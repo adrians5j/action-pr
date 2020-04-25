@@ -25,5 +25,3 @@ const ping = async () => {
 
     return true;
 };
-
-ping();
