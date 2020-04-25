@@ -1,14 +1,9 @@
-const core = require("@actions/core");
-const exec = require("@actions/exec");
 const prepareEnvFiles = require("./scripts/prepareEnvFiles");
 const pingUntilDeployed = require("./scripts/pingUntilDeployed");
 
-export const isPost = !!process.env["STATE_isPost"];
-
-
-console.log('woaaaah 2', process.env["STATE_isPost"])
-console.log('woaaaah', process.env)
-async function deploy() {
+(async () => {
+    const core = require("@actions/core");
+    const exec = require("@actions/exec");
 
     try {
         core.startGroup("Deploying Webiny Project");
@@ -31,28 +26,4 @@ async function deploy() {
     } catch (e) {
         core.setFailed(e.message);
     }
-}
-
-async function remove() {
-    try {
-        core.startGroup("Removing Webiny Project");
-
-        core.info(`✨ Removing API...`);
-        await exec.exec("yarn webiny remove-api --env dev --debug");
-
-        core.info(`✨ Removing Apps...`);
-        await exec.exec("yarn webiny remove-apps --env dev --debug");
-
-        core.info(`🎉 Project removed successfully.`);
-
-        core.endGroup();
-    } catch (e) {
-        core.setFailed(e.message);
-    }
-}
-
-if (isPost) {
-    remove();
-} else {
-    deploy();
-}
+})();
