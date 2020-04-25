@@ -6,8 +6,8 @@ const pingUntilDeployed = require("./scripts/pingUntilDeployed");
 export const isPost = !!process.env["STATE_isPost"];
 
 
-console.log('woaaaah', process.env)
 console.log('woaaaah 2', process.env["STATE_isPost"])
+console.log('woaaaah', process.env)
 async function deploy() {
 
     try {

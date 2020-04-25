@@ -12607,8 +12607,8 @@ const exec = __webpack_require__(986);
 const prepareEnvFiles = __webpack_require__(838);
 const pingUntilDeployed = __webpack_require__(952);
 const isPost = !!process.env["STATE_isPost"];
-console.log('woaaaah', process.env);
 console.log('woaaaah 2', process.env["STATE_isPost"]);
+console.log('woaaaah', process.env);
 function deploy() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
